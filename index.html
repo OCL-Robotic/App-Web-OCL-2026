@@ -11,18 +11,26 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
     </style>
-<script type="importmap">
+    <!-- Shim para evitar errores de process.env en el navegador -->
+    <script>
+        window.process = window.process || { env: { API_KEY: "" } };
+    </script>
+    <script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "@google/genai": "https://esm.sh/@google/genai@1.35.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.35.0"
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>
 </head>
 <body class="bg-slate-50 text-slate-900">
     <div id="root"></div>
+    <!-- Carga del punto de entrada de la aplicación -->
+    <script type="module" src="index.tsx"></script>
 </body>
 </html>
