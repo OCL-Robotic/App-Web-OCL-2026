@@ -11,7 +11,7 @@ export const generateLessonPlan = async (inputs: FormInputs): Promise<LessonPlan
     throw new Error("La API_KEY no está configurada en el entorno. Verifica la configuración en Vercel.");
   }
 
-  const ai = new GoogleGenAI({ apiKey:apiKey:import.meta.env.VITE_API_KEY});
+  const ai = new GoogleGenAI({ apiKey:import.meta.env.VITE_API_KEY});
   
   const prompt = `Actúa como un experto en diseño curricular pedagógico de vanguardia.
   Genera un plan de clase detallado y creativo en ESPAÑOL para la siguiente información:
