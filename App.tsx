@@ -16,12 +16,13 @@ const App: React.FC = () => {
     try {
       const result = await generateLessonPlan(inputs);
       setPlan(result);
-      // Smooth scroll to results
       setTimeout(() => {
         document.getElementById('result-section')?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     } catch (err: any) {
-      setError(err.message || 'Error al conectar con la IA. Por favor, revisa tu conexión.');
+      console.error("Error capturado en App:", err);
+      // Mostramos el mensaje de error real para diagnosticar problemas de API Key o cuota
+      setError(err.message || 'Error inesperado al conectar con OMEGA AI.');
     } finally {
       setLoading(false);
     }
@@ -33,7 +34,6 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen pb-20">
-      {/* Navigation / Header */}
       <nav className="bg-white border-b border-slate-200 sticky top-0 z-50 print:hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -59,7 +59,6 @@ const App: React.FC = () => {
       </nav>
 
       <main className="max-w-4xl mx-auto px-4 mt-12 space-y-12">
-        {/* Intro Section */}
         <header className="text-center space-y-4 print:hidden">
           <h2 className="text-4xl font-extrabold text-slate-900 sm:text-5xl tracking-tight">
             Potencia tu enseñanza con <span className="text-indigo-600">OMEGA AI</span>
@@ -69,18 +68,20 @@ const App: React.FC = () => {
           </p>
         </header>
 
-        {/* Main Form */}
         <section className="print:hidden">
           <LessonForm onGenerate={handleGenerate} isLoading={loading} />
           {error && (
-            <div className="mt-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg flex items-center gap-2 animate-pulse">
-              <i className="fas fa-exclamation-circle"></i>
-              {error}
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg flex items-start gap-3 shadow-sm">
+              <i className="fas fa-exclamation-triangle mt-1"></i>
+              <div>
+                <p className="font-bold">Error de Generación</p>
+                <p className="text-sm opacity-90">{error}</p>
+                <p className="text-xs mt-2 text-red-500">Asegúrate de que la API_KEY esté configurada correctamente en Vercel.</p>
+              </div>
             </div>
           )}
         </section>
 
-        {/* Results Section */}
         {(plan || loading) && (
           <div id="result-section" className="pt-8">
             {loading ? (
@@ -99,7 +100,6 @@ const App: React.FC = () => {
         )}
       </main>
 
-      {/* Persistent Call-to-action for printing when plan is ready */}
       {plan && !loading && (
         <div className="fixed bottom-8 right-8 flex flex-col gap-3 print:hidden">
           <button
