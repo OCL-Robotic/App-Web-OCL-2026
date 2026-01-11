@@ -5,7 +5,7 @@ import { LessonPlan, FormInputs } from "../types";
 export const generateLessonPlan = async (inputs: FormInputs): Promise<LessonPlan> => {
   // Obtenemos la API_KEY directamente del entorno. 
   // En Vercel, debe estar configurada en Project Settings > Environment Variables
-  const apiKey = process.env.API_KEY;
+  const apiKey: import.meta.env.VITE_API_KEY;
   
   if (!apiKey) {
     throw new Error("La API_KEY no está configurada en el entorno. Verifica la configuración en Vercel.");
